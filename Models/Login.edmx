@@ -1,0 +1,338 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DB_LogginModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Modulo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Operaciones">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" />
+          <Property Name="idModulo" Type="int" />
+        </EntityType>
+        <EntityType Name="Rol">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="90" />
+        </EntityType>
+        <EntityType Name="Rol_Operacion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idRol" Type="int" />
+          <Property Name="idOperacion" Type="int" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Correo" Type="varchar" MaxLength="200" />
+          <Property Name="Contraseña" Type="varchar" MaxLength="300" />
+          <Property Name="idRol" Type="int" />
+        </EntityType>
+        <Association Name="FK_Operaciones_idModulo">
+          <End Role="Modulo" Type="Self.Modulo" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Operaciones" Type="Self.Operaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modulo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Operaciones">
+              <PropertyRef Name="idModulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rol_Operacion_idOperacion">
+          <End Role="Operaciones" Type="Self.Operaciones" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Rol_Operacion" Type="Self.Rol_Operacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Operaciones">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Rol_Operacion">
+              <PropertyRef Name="idOperacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rol_Operacion_idRol">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Rol_Operacion" Type="Self.Rol_Operacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Rol_Operacion">
+              <PropertyRef Name="idRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="idRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="sp_RegistrarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Correo" Type="varchar" Mode="In" />
+          <Parameter Name="Contraseña" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="DB_LogginModelStoreContainer">
+          <EntitySet Name="Modulo" EntityType="Self.Modulo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Operaciones" EntityType="Self.Operaciones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rol_Operacion" EntityType="Self.Rol_Operacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Operaciones_idModulo" Association="Self.FK_Operaciones_idModulo">
+            <End Role="Modulo" EntitySet="Modulo" />
+            <End Role="Operaciones" EntitySet="Operaciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rol_Operacion_idOperacion" Association="Self.FK_Rol_Operacion_idOperacion">
+            <End Role="Operaciones" EntitySet="Operaciones" />
+            <End Role="Rol_Operacion" EntitySet="Rol_Operacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rol_Operacion_idRol" Association="Self.FK_Rol_Operacion_idRol">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="Rol_Operacion" EntitySet="Rol_Operacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario" Association="Self.FK_Usuario">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB_LogginModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Correo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Contraseña" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="idRol" Type="Int32" />
+          <NavigationProperty Name="Rol" Relationship="DB_LogginModel.FK_Usuario" FromRole="Usuario" ToRole="Rol" />
+        </EntityType>
+        <EntityContainer Name="DB_LogginEntities3" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+          <FunctionImport Name="sp_RegistrarUsuario">
+            <Parameter Name="Correo" Mode="In" Type="String" />
+            <Parameter Name="Contraseña" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="Modulo" EntityType="DB_LogginModel.Modulo" />
+          <EntitySet Name="Operaciones" EntityType="DB_LogginModel.Operaciones" />
+          <EntitySet Name="Rol" EntityType="DB_LogginModel.Rol" />
+          <EntitySet Name="Rol_Operacion" EntityType="DB_LogginModel.Rol_Operacion" />
+          <AssociationSet Name="FK_Operaciones_idModulo" Association="DB_LogginModel.FK_Operaciones_idModulo">
+            <End Role="Modulo" EntitySet="Modulo" />
+            <End Role="Operaciones" EntitySet="Operaciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rol_Operacion_idOperacion" Association="DB_LogginModel.FK_Rol_Operacion_idOperacion">
+            <End Role="Operaciones" EntitySet="Operaciones" />
+            <End Role="Rol_Operacion" EntitySet="Rol_Operacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rol_Operacion_idRol" Association="DB_LogginModel.FK_Rol_Operacion_idRol">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="Rol_Operacion" EntitySet="Rol_Operacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario" Association="DB_LogginModel.FK_Usuario">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Modulo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Operaciones" Relationship="DB_LogginModel.FK_Operaciones_idModulo" FromRole="Modulo" ToRole="Operaciones" />
+        </EntityType>
+        <EntityType Name="Operaciones">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="idModulo" Type="Int32" />
+          <NavigationProperty Name="Modulo" Relationship="DB_LogginModel.FK_Operaciones_idModulo" FromRole="Operaciones" ToRole="Modulo" />
+          <NavigationProperty Name="Rol_Operacion" Relationship="DB_LogginModel.FK_Rol_Operacion_idOperacion" FromRole="Operaciones" ToRole="Rol_Operacion" />
+        </EntityType>
+        <EntityType Name="Rol">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="90" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Rol_Operacion" Relationship="DB_LogginModel.FK_Rol_Operacion_idRol" FromRole="Rol" ToRole="Rol_Operacion" />
+          <NavigationProperty Name="Usuario" Relationship="DB_LogginModel.FK_Usuario" FromRole="Rol" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Rol_Operacion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idRol" Type="Int32" />
+          <Property Name="idOperacion" Type="Int32" />
+          <NavigationProperty Name="Operaciones" Relationship="DB_LogginModel.FK_Rol_Operacion_idOperacion" FromRole="Rol_Operacion" ToRole="Operaciones" />
+          <NavigationProperty Name="Rol" Relationship="DB_LogginModel.FK_Rol_Operacion_idRol" FromRole="Rol_Operacion" ToRole="Rol" />
+        </EntityType>
+        <Association Name="FK_Operaciones_idModulo">
+          <End Type="DB_LogginModel.Modulo" Role="Modulo" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DB_LogginModel.Operaciones" Role="Operaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modulo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Operaciones">
+              <PropertyRef Name="idModulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rol_Operacion_idOperacion">
+          <End Type="DB_LogginModel.Operaciones" Role="Operaciones" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DB_LogginModel.Rol_Operacion" Role="Rol_Operacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Operaciones">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Rol_Operacion">
+              <PropertyRef Name="idOperacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rol_Operacion_idRol">
+          <End Type="DB_LogginModel.Rol" Role="Rol" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DB_LogginModel.Rol_Operacion" Role="Rol_Operacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Rol_Operacion">
+              <PropertyRef Name="idRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario">
+          <End Type="DB_LogginModel.Rol" Role="Rol" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DB_LogginModel.Usuario" Role="Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="idRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB_LogginModelStoreContainer" CdmEntityContainer="DB_LogginEntities3">
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="DB_LogginModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="idRol" ColumnName="idRol" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="Contraseña" ColumnName="Contraseña" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_RegistrarUsuario" FunctionName="DB_LogginModel.Store.sp_RegistrarUsuario" />
+          <EntitySetMapping Name="Modulo">
+            <EntityTypeMapping TypeName="DB_LogginModel.Modulo">
+              <MappingFragment StoreEntitySet="Modulo">
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Operaciones">
+            <EntityTypeMapping TypeName="DB_LogginModel.Operaciones">
+              <MappingFragment StoreEntitySet="Operaciones">
+                <ScalarProperty Name="idModulo" ColumnName="idModulo" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rol">
+            <EntityTypeMapping TypeName="DB_LogginModel.Rol">
+              <MappingFragment StoreEntitySet="Rol">
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rol_Operacion">
+            <EntityTypeMapping TypeName="DB_LogginModel.Rol_Operacion">
+              <MappingFragment StoreEntitySet="Rol_Operacion">
+                <ScalarProperty Name="idOperacion" ColumnName="idOperacion" />
+                <ScalarProperty Name="idRol" ColumnName="idRol" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

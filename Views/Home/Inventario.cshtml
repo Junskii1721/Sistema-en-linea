@@ -1,0 +1,118 @@
+﻿@model IEnumerable<Facturacion.Models.Productos>
+
+
+@{
+    ViewBag.Title = "Inventario";
+}
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style>
+
+        .diseño {
+            text-align: center;
+            font-family:Georgia, 'Times New Roman', Times, serif;
+            color: antiquewhite;
+            background-image: url('../../Imagenes/333.jpg');
+            text-align: center;
+            position: relative;
+            border-radius: 100px;
+        }
+    </style>
+</head>
+<body>
+
+
+    <div class="diseño">
+
+        <h2>Inventario</h2>
+
+    </div>
+
+
+</body>
+</html>
+
+
+
+
+
+
+<!--Esta es la tabla inventarios de admin-->
+
+<div class="table-responsive">
+
+    <table class="table table-bordered table-condensed table-striped table-hover sortable">
+        @if (Model.Count() == 0)
+        {
+            <tr>
+                <td colspan="10">No Record's found.</td>
+            </tr>
+
+        }
+        else
+        {
+            <thead>
+                <tr class="Barra_de_Titulos">
+                    <th>Producto</th>
+                    <th>Cantidad Inventario</th>
+                    <th>Precio</th>
+                    <th>Distribuidora</th>
+                    <th>Acciones:</th>
+
+                    <style>
+                        .Barra_de_Titulos {
+                            width: 500px;
+                            height: 70px;
+                            background-image: url('../../Imagenes/333.jpg');
+                            text-align: center;
+                            font-family:Georgia;
+                            color: antiquewhite;
+                            font-size: 23px;
+
+                       
+                        }
+                    </style>
+                </tr>
+            </thead>
+
+            foreach (var item in Model)
+            {
+
+                <tr class="Cuerpo_Tabla">
+
+
+
+                    <td>@item.Nombre_Del_Producto</td>
+                    <td>@item.Cantidad_En_Inventario</td>
+                    <td>@item.Precio_Estandar</td>
+                    <td>@item.Almacen.Nombre_De_La_Distribuidora</td>
+
+
+     
+        <style>
+         
+            .Cuerpo_Tabla {
+                background-color:aliceblue;
+                font-family:Calibri;
+                font-size:20px;
+              
+                border-block:solid;
+                border-block-color:coral;
+              
+            }
+        </style>
+        <td>
+            @Html.ActionLink("Modificar", "EditarProducto", new { id = item.ProductoID }, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Ver Detalle", "Details", new { id = item.ProductoID }, new { @class = "btn btn-info" })
+            @Html.ActionLink("Borrar", "EliminarRegistro", new { id = item.ProductoID }, new { @class = "btn btn-danger" })
+        </td>
+
+        </tr>
+
+    }
+}
+        </table>
+        </div>

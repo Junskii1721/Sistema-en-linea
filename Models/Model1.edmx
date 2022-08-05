@@ -1,0 +1,460 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DBFacturacionModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Almacen">
+          <Key>
+            <PropertyRef Name="AlmacenID" />
+          </Key>
+          <Property Name="AlmacenID" Type="numeric" Precision="8" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre_De_La_Distribuidora" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Direccion" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="CiudadID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ciudad">
+          <Key>
+            <PropertyRef Name="CiudadID" />
+          </Key>
+          <Property Name="CiudadID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre_Ciudad" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DetalleFactura">
+          <Key>
+            <PropertyRef Name="ItemID" />
+          </Key>
+          <Property Name="ItemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FacturaID" Type="int" Nullable="false" />
+          <Property Name="ProductoID" Type="int" Nullable="false" />
+          <Property Name="Cantidad" Type="numeric" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="Precio_Unitario" Type="numeric" Precision="4" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Empleados">
+          <Key>
+            <PropertyRef Name="EmpleadosID" />
+          </Key>
+          <Property Name="EmpleadosID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre_Del_Empleado" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Apellido_Del_Empleado" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="FecNac" Type="date" Nullable="false" />
+          <Property Name="Edad" Type="int" StoreGeneratedPattern="Computed" />
+          <Property Name="Numero_Telefonico" Type="numeric" Precision="8" Scale="0" Nullable="false" />
+          <Property Name="CargoID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Factura">
+          <Key>
+            <PropertyRef Name="FacturaID" />
+          </Key>
+          <Property Name="FacturaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VendedorID" Type="int" Nullable="false" />
+          <Property Name="FechaFactura" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Info_Cargo">
+          <Key>
+            <PropertyRef Name="CargoID" />
+          </Key>
+          <Property Name="CargoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion_Del_Cargo" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Productos">
+          <Key>
+            <PropertyRef Name="ProductoID" />
+          </Key>
+          <Property Name="ProductoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre_Del_Producto" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Cantidad_En_Inventario" Type="numeric" Precision="8" Scale="0" Nullable="false" />
+          <Property Name="Precio_Estandar" Type="numeric" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="AlmacenID" Type="numeric" Precision="8" Scale="0" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Almacen__CiudadI__300424B4">
+          <End Role="Ciudad" Type="Self.Ciudad" Multiplicity="1" />
+          <End Role="Almacen" Type="Self.Almacen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ciudad">
+              <PropertyRef Name="CiudadID" />
+            </Principal>
+            <Dependent Role="Almacen">
+              <PropertyRef Name="CiudadID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetalleFa__Factu__30F848ED">
+          <End Role="Factura" Type="Self.Factura" Multiplicity="1" />
+          <End Role="DetalleFactura" Type="Self.DetalleFactura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Factura">
+              <PropertyRef Name="FacturaID" />
+            </Principal>
+            <Dependent Role="DetalleFactura">
+              <PropertyRef Name="FacturaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetalleFa__Produ__31EC6D26">
+          <End Role="Productos" Type="Self.Productos" Multiplicity="1" />
+          <End Role="DetalleFactura" Type="Self.DetalleFactura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Productos">
+              <PropertyRef Name="ProductoID" />
+            </Principal>
+            <Dependent Role="DetalleFactura">
+              <PropertyRef Name="ProductoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Empleados__Cargo__32E0915F">
+          <End Role="Info_Cargo" Type="Self.Info_Cargo" Multiplicity="1" />
+          <End Role="Empleados" Type="Self.Empleados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Info_Cargo">
+              <PropertyRef Name="CargoID" />
+            </Principal>
+            <Dependent Role="Empleados">
+              <PropertyRef Name="CargoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Factura__Vendedo__33D4B598">
+          <End Role="Empleados" Type="Self.Empleados" Multiplicity="1" />
+          <End Role="Factura" Type="Self.Factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleados">
+              <PropertyRef Name="EmpleadosID" />
+            </Principal>
+            <Dependent Role="Factura">
+              <PropertyRef Name="VendedorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Productos__Almac__34C8D9D1">
+          <End Role="Almacen" Type="Self.Almacen" Multiplicity="1" />
+          <End Role="Productos" Type="Self.Productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Almacen">
+              <PropertyRef Name="AlmacenID" />
+            </Principal>
+            <Dependent Role="Productos">
+              <PropertyRef Name="AlmacenID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBFacturacionModelStoreContainer">
+          <EntitySet Name="Almacen" EntityType="Self.Almacen" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ciudad" EntityType="Self.Ciudad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DetalleFactura" EntityType="Self.DetalleFactura" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Empleados" EntityType="Self.Empleados" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Factura" EntityType="Self.Factura" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Info_Cargo" EntityType="Self.Info_Cargo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Productos" EntityType="Self.Productos" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Almacen__CiudadI__300424B4" Association="Self.FK__Almacen__CiudadI__300424B4">
+            <End Role="Ciudad" EntitySet="Ciudad" />
+            <End Role="Almacen" EntitySet="Almacen" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetalleFa__Factu__30F848ED" Association="Self.FK__DetalleFa__Factu__30F848ED">
+            <End Role="Factura" EntitySet="Factura" />
+            <End Role="DetalleFactura" EntitySet="DetalleFactura" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetalleFa__Produ__31EC6D26" Association="Self.FK__DetalleFa__Produ__31EC6D26">
+            <End Role="Productos" EntitySet="Productos" />
+            <End Role="DetalleFactura" EntitySet="DetalleFactura" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Empleados__Cargo__32E0915F" Association="Self.FK__Empleados__Cargo__32E0915F">
+            <End Role="Info_Cargo" EntitySet="Info_Cargo" />
+            <End Role="Empleados" EntitySet="Empleados" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Factura__Vendedo__33D4B598" Association="Self.FK__Factura__Vendedo__33D4B598">
+            <End Role="Empleados" EntitySet="Empleados" />
+            <End Role="Factura" EntitySet="Factura" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Productos__Almac__34C8D9D1" Association="Self.FK__Productos__Almac__34C8D9D1">
+            <End Role="Almacen" EntitySet="Almacen" />
+            <End Role="Productos" EntitySet="Productos" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DBFacturacionModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Almacen">
+          <Key>
+            <PropertyRef Name="AlmacenID" />
+          </Key>
+          <Property Name="AlmacenID" Type="Decimal" Precision="8" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre_De_La_Distribuidora" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Direccion" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CiudadID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Ciudad" Relationship="Self.FK__Almacen__CiudadI__300424B4" FromRole="Almacen" ToRole="Ciudad" />
+          <NavigationProperty Name="Productos" Relationship="Self.FK__Productos__Almac__34C8D9D1" FromRole="Almacen" ToRole="Productos" />
+        </EntityType>
+        <EntityType Name="Ciudad">
+          <Key>
+            <PropertyRef Name="CiudadID" />
+          </Key>
+          <Property Name="CiudadID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre_Ciudad" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Almacen" Relationship="Self.FK__Almacen__CiudadI__300424B4" FromRole="Ciudad" ToRole="Almacen" />
+        </EntityType>
+        <EntityType Name="DetalleFactura">
+          <Key>
+            <PropertyRef Name="ItemID" />
+          </Key>
+          <Property Name="ItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FacturaID" Type="Int32" Nullable="false" />
+          <Property Name="ProductoID" Type="Int32" Nullable="false" />
+          <Property Name="Cantidad" Type="Decimal" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="Precio_Unitario" Type="Decimal" Precision="4" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Factura" Relationship="Self.FK__DetalleFa__Factu__30F848ED" FromRole="DetalleFactura" ToRole="Factura" />
+          <NavigationProperty Name="Productos" Relationship="Self.FK__DetalleFa__Produ__31EC6D26" FromRole="DetalleFactura" ToRole="Productos" />
+        </EntityType>
+        <EntityType Name="Empleados">
+          <Key>
+            <PropertyRef Name="EmpleadosID" />
+          </Key>
+          <Property Name="EmpleadosID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre_Del_Empleado" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Apellido_Del_Empleado" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FecNac" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Edad" Type="Int32" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="Numero_Telefonico" Type="Decimal" Precision="8" Scale="0" Nullable="false" />
+          <Property Name="CargoID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Info_Cargo" Relationship="Self.FK__Empleados__Cargo__32E0915F" FromRole="Empleados" ToRole="Info_Cargo" />
+          <NavigationProperty Name="Factura" Relationship="Self.FK__Factura__Vendedo__33D4B598" FromRole="Empleados" ToRole="Factura" />
+        </EntityType>
+        <EntityType Name="Factura">
+          <Key>
+            <PropertyRef Name="FacturaID" />
+          </Key>
+          <Property Name="FacturaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VendedorID" Type="Int32" Nullable="false" />
+          <Property Name="FechaFactura" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="DetalleFactura" Relationship="Self.FK__DetalleFa__Factu__30F848ED" FromRole="Factura" ToRole="DetalleFactura" />
+          <NavigationProperty Name="Empleados" Relationship="Self.FK__Factura__Vendedo__33D4B598" FromRole="Factura" ToRole="Empleados" />
+        </EntityType>
+        <EntityType Name="Info_Cargo">
+          <Key>
+            <PropertyRef Name="CargoID" />
+          </Key>
+          <Property Name="CargoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion_Del_Cargo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Empleados" Relationship="Self.FK__Empleados__Cargo__32E0915F" FromRole="Info_Cargo" ToRole="Empleados" />
+        </EntityType>
+        <EntityType Name="Productos">
+          <Key>
+            <PropertyRef Name="ProductoID" />
+          </Key>
+          <Property Name="ProductoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre_Del_Producto" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Cantidad_En_Inventario" Type="Decimal" Precision="8" Scale="0" Nullable="false" />
+          <Property Name="Precio_Estandar" Type="Decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="AlmacenID" Type="Decimal" Precision="8" Scale="0" Nullable="false" />
+          <NavigationProperty Name="Almacen" Relationship="Self.FK__Productos__Almac__34C8D9D1" FromRole="Productos" ToRole="Almacen" />
+          <NavigationProperty Name="DetalleFactura" Relationship="Self.FK__DetalleFa__Produ__31EC6D26" FromRole="Productos" ToRole="DetalleFactura" />
+        </EntityType>
+        <Association Name="FK__Almacen__CiudadI__300424B4">
+          <End Role="Ciudad" Type="Self.Ciudad" Multiplicity="1" />
+          <End Role="Almacen" Type="Self.Almacen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ciudad">
+              <PropertyRef Name="CiudadID" />
+            </Principal>
+            <Dependent Role="Almacen">
+              <PropertyRef Name="CiudadID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Productos__Almac__34C8D9D1">
+          <End Role="Almacen" Type="Self.Almacen" Multiplicity="1" />
+          <End Role="Productos" Type="Self.Productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Almacen">
+              <PropertyRef Name="AlmacenID" />
+            </Principal>
+            <Dependent Role="Productos">
+              <PropertyRef Name="AlmacenID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetalleFa__Factu__30F848ED">
+          <End Role="Factura" Type="Self.Factura" Multiplicity="1" />
+          <End Role="DetalleFactura" Type="Self.DetalleFactura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Factura">
+              <PropertyRef Name="FacturaID" />
+            </Principal>
+            <Dependent Role="DetalleFactura">
+              <PropertyRef Name="FacturaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetalleFa__Produ__31EC6D26">
+          <End Role="Productos" Type="Self.Productos" Multiplicity="1" />
+          <End Role="DetalleFactura" Type="Self.DetalleFactura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Productos">
+              <PropertyRef Name="ProductoID" />
+            </Principal>
+            <Dependent Role="DetalleFactura">
+              <PropertyRef Name="ProductoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Empleados__Cargo__32E0915F">
+          <End Role="Info_Cargo" Type="Self.Info_Cargo" Multiplicity="1" />
+          <End Role="Empleados" Type="Self.Empleados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Info_Cargo">
+              <PropertyRef Name="CargoID" />
+            </Principal>
+            <Dependent Role="Empleados">
+              <PropertyRef Name="CargoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Factura__Vendedo__33D4B598">
+          <End Role="Empleados" Type="Self.Empleados" Multiplicity="1" />
+          <End Role="Factura" Type="Self.Factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleados">
+              <PropertyRef Name="EmpleadosID" />
+            </Principal>
+            <Dependent Role="Factura">
+              <PropertyRef Name="VendedorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBFacturacionEntities3" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Almacen" EntityType="Self.Almacen" />
+          <EntitySet Name="Ciudad" EntityType="Self.Ciudad" />
+          <EntitySet Name="DetalleFactura" EntityType="Self.DetalleFactura" />
+          <EntitySet Name="Empleados" EntityType="Self.Empleados" />
+          <EntitySet Name="Factura" EntityType="Self.Factura" />
+          <EntitySet Name="Info_Cargo" EntityType="Self.Info_Cargo" />
+          <EntitySet Name="Productos" EntityType="Self.Productos" />
+          <AssociationSet Name="FK__Almacen__CiudadI__300424B4" Association="Self.FK__Almacen__CiudadI__300424B4">
+            <End Role="Ciudad" EntitySet="Ciudad" />
+            <End Role="Almacen" EntitySet="Almacen" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Productos__Almac__34C8D9D1" Association="Self.FK__Productos__Almac__34C8D9D1">
+            <End Role="Almacen" EntitySet="Almacen" />
+            <End Role="Productos" EntitySet="Productos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetalleFa__Factu__30F848ED" Association="Self.FK__DetalleFa__Factu__30F848ED">
+            <End Role="Factura" EntitySet="Factura" />
+            <End Role="DetalleFactura" EntitySet="DetalleFactura" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetalleFa__Produ__31EC6D26" Association="Self.FK__DetalleFa__Produ__31EC6D26">
+            <End Role="Productos" EntitySet="Productos" />
+            <End Role="DetalleFactura" EntitySet="DetalleFactura" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Empleados__Cargo__32E0915F" Association="Self.FK__Empleados__Cargo__32E0915F">
+            <End Role="Info_Cargo" EntitySet="Info_Cargo" />
+            <End Role="Empleados" EntitySet="Empleados" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Factura__Vendedo__33D4B598" Association="Self.FK__Factura__Vendedo__33D4B598">
+            <End Role="Empleados" EntitySet="Empleados" />
+            <End Role="Factura" EntitySet="Factura" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DBFacturacionModelStoreContainer" CdmEntityContainer="DBFacturacionEntities3">
+          <EntitySetMapping Name="Almacen">
+            <EntityTypeMapping TypeName="DBFacturacionModel.Almacen">
+              <MappingFragment StoreEntitySet="Almacen">
+                <ScalarProperty Name="AlmacenID" ColumnName="AlmacenID" />
+                <ScalarProperty Name="Nombre_De_La_Distribuidora" ColumnName="Nombre_De_La_Distribuidora" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="CiudadID" ColumnName="CiudadID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ciudad">
+            <EntityTypeMapping TypeName="DBFacturacionModel.Ciudad">
+              <MappingFragment StoreEntitySet="Ciudad">
+                <ScalarProperty Name="CiudadID" ColumnName="CiudadID" />
+                <ScalarProperty Name="Nombre_Ciudad" ColumnName="Nombre_Ciudad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DetalleFactura">
+            <EntityTypeMapping TypeName="DBFacturacionModel.DetalleFactura">
+              <MappingFragment StoreEntitySet="DetalleFactura">
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+                <ScalarProperty Name="FacturaID" ColumnName="FacturaID" />
+                <ScalarProperty Name="ProductoID" ColumnName="ProductoID" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Precio_Unitario" ColumnName="Precio_Unitario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Empleados">
+            <EntityTypeMapping TypeName="DBFacturacionModel.Empleados">
+              <MappingFragment StoreEntitySet="Empleados">
+                <ScalarProperty Name="EmpleadosID" ColumnName="EmpleadosID" />
+                <ScalarProperty Name="Nombre_Del_Empleado" ColumnName="Nombre_Del_Empleado" />
+                <ScalarProperty Name="Apellido_Del_Empleado" ColumnName="Apellido_Del_Empleado" />
+                <ScalarProperty Name="FecNac" ColumnName="FecNac" />
+                <ScalarProperty Name="Edad" ColumnName="Edad" />
+                <ScalarProperty Name="Numero_Telefonico" ColumnName="Numero_Telefonico" />
+                <ScalarProperty Name="CargoID" ColumnName="CargoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Factura">
+            <EntityTypeMapping TypeName="DBFacturacionModel.Factura">
+              <MappingFragment StoreEntitySet="Factura">
+                <ScalarProperty Name="FacturaID" ColumnName="FacturaID" />
+                <ScalarProperty Name="VendedorID" ColumnName="VendedorID" />
+                <ScalarProperty Name="FechaFactura" ColumnName="FechaFactura" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Info_Cargo">
+            <EntityTypeMapping TypeName="DBFacturacionModel.Info_Cargo">
+              <MappingFragment StoreEntitySet="Info_Cargo">
+                <ScalarProperty Name="CargoID" ColumnName="CargoID" />
+                <ScalarProperty Name="Descripcion_Del_Cargo" ColumnName="Descripcion_Del_Cargo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Productos">
+            <EntityTypeMapping TypeName="DBFacturacionModel.Productos">
+              <MappingFragment StoreEntitySet="Productos">
+                <ScalarProperty Name="ProductoID" ColumnName="ProductoID" />
+                <ScalarProperty Name="Nombre_Del_Producto" ColumnName="Nombre_Del_Producto" />
+                <ScalarProperty Name="Cantidad_En_Inventario" ColumnName="Cantidad_En_Inventario" />
+                <ScalarProperty Name="Precio_Estandar" ColumnName="Precio_Estandar" />
+                <ScalarProperty Name="AlmacenID" ColumnName="AlmacenID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

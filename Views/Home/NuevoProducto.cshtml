@@ -1,0 +1,134 @@
+﻿@model Facturacion.Models.Productos
+
+@{
+    ViewBag.Title = "NuevoProducto";
+}
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+
+    <div class="NombreProyecto">
+        <h1 style="text-align:center">ZocoStore</h1>
+
+    </div>
+    <style>
+        .NombreProyecto {
+            background-color: crimson;
+            border-radius: 10px;
+        }
+
+    </style>
+
+</body>
+</html>
+
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+
+    <style>
+
+        .cuadro {
+            background: gold;
+            width: 500px;
+            height: 40px;
+            font-family:Impact;
+            text-align: center;
+            position: relative;
+            left: 300px;
+            border-radius: 10px;
+        }
+    </style>
+
+    <div class="cuadro">
+        <div>
+            <h2>AGREGAR NUEVO PRODUCTO</h2>
+        </div>
+    </div>
+
+</body>
+</html>
+
+   
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+
+                <hr />
+
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Nombre_Del_Producto, "Nombre del Producto", htmlAttributes: new { @class = "control-label col-md-2" })
+
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Nombre_Del_Producto, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Nombre_Del_Producto, "", new { @class = "text-danger" })
+
+                    </div>
+                </div>
+
+
+
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Cantidad_En_Inventario, "Cantidad en Inventario", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Cantidad_En_Inventario, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Cantidad_En_Inventario, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Precio_Estandar, "Precio", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Precio_Estandar, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Precio_Estandar, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AlmacenID, "Almacenes", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+
+                        @Html.DropDownListFor(model => model.AlmacenID, (SelectList)ViewBag.ListarAlmacenes as SelectList, "Seleccione...", new { @class = "form-control" })
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Crear Producto" class="btn btn-success" />
+
+                    </div>
+                </div>
+                Agregamos nuevo boton para retornar al inicio
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-12">
+                        @Html.ActionLink("Ir a inicio", "Index", null, new { @class = "btn btn-lg btn-primary" })
+
+                    </div>
+                </div>
+
+
+
+            </div>
+        }
+
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }
