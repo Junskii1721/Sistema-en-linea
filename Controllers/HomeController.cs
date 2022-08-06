@@ -17,18 +17,15 @@ namespace Facturacion.Controllers
     {
 
         Models.DBFacturacionEntities3 modelo = new Models.DBFacturacionEntities3();
+        Models.DB_ImagenesEntities1 modeloImg = new Models.DB_ImagenesEntities1();
+
         [AutorizarUsuario(idOperacion: 1)]
-        public ActionResult Index(string NombreProducto, string oUsuario)
+        public ActionResult Index()
         {
             // aqui va a air los datos de las imagenes
-            var ListarProductos = modelo.Productos.ToList();
+            var ListarImagenes = modeloImg.Imagenes.ToList();            
 
-            if (!string.IsNullOrEmpty(NombreProducto))
-            {
-                ListarProductos = modelo.Productos.Where(p => p.Nombre_Del_Producto.Contains(NombreProducto)).ToList();
-            }
-
-            return View(ListarProductos);
+            return View(ListarImagenes);
         }
 
         public ActionResult ProductosDisponibles(string NombreProducto, string oUsuario)
