@@ -23,7 +23,7 @@ namespace Facturacion.Controllers
         public ActionResult Index()
         {
             // aqui va a air los datos de las imagenes
-            var ListarImagenes = modeloImg.Imagenes.ToList();            
+            var ListarImagenes = modeloImg.Imagenes.ToList();
 
             return View(ListarImagenes);
         }
@@ -128,12 +128,41 @@ namespace Facturacion.Controllers
 
             return View();
         }
+
+        // Mostrar o renderizar vista contacto
         [AutorizarUsuario(idOperacion: 3)]
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        //Guarde la informacion del contacto.
+        [HttpPost]
+        public ActionResult guardarMensaje(string Nombre, string Apellido, string Correo, string Celular, string Mensaje)
+        {
+            try
+            {
+                Models.contacto oContacto = new Models.contacto();
+                oContacto.Nombre = Nombre;
+                oContacto.Apellido = Apellido;
+                oContacto.NombreCompleto = Nombre + " " + Apellido;
+                oContacto.Correo = Correo;
+                oContacto.Celular = Celular;
+                oContacto.Mensaje = Mensaje;
+                oContacto.FechaMensaje = DateTime.Now;
+
+                dbContacto.contacto.Add(oContacto);
+                dbContacto.SaveChanges();
+                // Redireciona a la vista de enviado con exito.
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception)
+            {
+                // Redireccionar a la vista fallo al enviar.
+                return RedirectToAction("Index", "Error");
+            }
         }
 
         [AutorizarUsuario(idOperacion: 4)]

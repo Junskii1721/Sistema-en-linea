@@ -20,22 +20,23 @@
                 </span>
             </header>
 
-            <form action="" class="contact" method="POST">
+            <form class="contact" action="/Home/guardarMensaje" method="POST">
+                @Html.ValidationSummary()
                 <label for="nombres">Nombre *</label>
-                <input type="text" name="nombre" id="nombre">
+                <input type="text" name="Nombre" id="Nombre">
 
                 <label for="apellido">Apellido *</label>
-                <input type="text" name="apellido" id="apellido">
+                <input type="text" name="Apellido" id="Apellido">
 
                 <label for="correo">Correo *</label>
-                <input type="text" name="correo" id="correo">
+                <input type="text" name="Correo" id="Correo">
 
                 <label for="nombres">Celular</label>
-                <input type="text" name="celular" id="celular">
+                <input type="text" name="Celular" id="Celular">
 
                 <label for="mensaje">Mensaje *</label>
-                <textarea name="mensaje" id="mensaje"></textarea>
-                <input type="submit" value="Enviar">
+                <textarea name="Mensaje" id="Mensaje"></textarea>
+                <button type="submit">Enviar</button>
 
 
             </form>
@@ -65,7 +66,7 @@
     }
 
     header {
-        font-family:Century;
+        font-family: Century;
         width: 100%;
         background: #063520;
         overflow: hidden;
