@@ -13,10 +13,10 @@ namespace Facturacion.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class DB_ImagenesEntities : DbContext
+    public partial class DB_ImagenesEntities1 : DbContext
     {
-        public DB_ImagenesEntities()
-            : base("name=DB_ImagenesEntities")
+        public DB_ImagenesEntities1()
+            : base("name=DB_ImagenesEntities1")
         {
         }
     
@@ -25,6 +25,6 @@ namespace Facturacion.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Imagene> Imagenes { get; set; }
+        public virtual DbSet<Imagenes> Imagenes { get; set; }
     }
 }

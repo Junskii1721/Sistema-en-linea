@@ -20,24 +20,24 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DB_ImagenesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Imagene">
+        <EntityType Name="Imagenes">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="imagen" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
         </EntityType>
-        <EntityContainer Name="DB_ImagenesEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Imagenes" EntityType="Self.Imagene" />
+        <EntityContainer Name="DB_ImagenesEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Imagenes" EntityType="Self.Imagenes" />
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="DB_ImagenesModelStoreContainer" CdmEntityContainer="DB_ImagenesEntities">
+        <EntityContainerMapping StorageEntityContainer="DB_ImagenesModelStoreContainer" CdmEntityContainer="DB_ImagenesEntities1">
           <EntitySetMapping Name="Imagenes">
-            <EntityTypeMapping TypeName="DB_ImagenesModel.Imagene">
+            <EntityTypeMapping TypeName="DB_ImagenesModel.Imagenes">
               <MappingFragment StoreEntitySet="Imagenes">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="imagen" ColumnName="imagen" />
@@ -58,7 +58,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />

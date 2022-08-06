@@ -1,4 +1,4 @@
-﻿// La generación de código T4 está habilitada para el modelo 'C:\Users\carlosqdev\Desktop\Junior\Sistema-en-linea\Models\ModelImagenes.edmx'. 
+﻿// La generación de código T4 está habilitada para el modelo 'C:\Users\home\Desktop\PROYECTO_FERIA\Proyecto Facturacion UdeM\Facturacion\Models\Imagenes.edmx'. 
 // Para habilitar la generación de código heredada, cambie el valor de la propiedad del diseñador 'Estrategia de generación de código'
 // por 'ObjectContext heredado'. Esta propiedad está disponible en la ventana Propiedades cuando se abre
 // el modelo en el diseñador.

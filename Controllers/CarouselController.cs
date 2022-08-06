@@ -15,7 +15,7 @@ namespace Facturacion.Controllers
         // GET: Carousel
         public ActionResult Index()
         {
-            using (DB_ImagenesEntities db = new DB_ImagenesEntities())
+            using (DB_ImagenesEntities1 db = new DB_ImagenesEntities1())
             {
                 var listaDeImagenes = db.Imagenes.ToList();
                 return View(listaDeImagenes);
@@ -30,7 +30,7 @@ namespace Facturacion.Controllers
 
         // Subir nueva imagen
         [HttpPost]
-        public ActionResult CreateImage(Imagene oImagen, HttpPostedFileBase upload)
+        public ActionResult CreateImage(Imagenes oImagen, HttpPostedFileBase upload)
         {
             try
             {
@@ -46,7 +46,7 @@ namespace Facturacion.Controllers
                         oImagen.imagen = imagenData;
                     }
 
-                    using (DB_ImagenesEntities db = new DB_ImagenesEntities())
+                    using (DB_ImagenesEntities1 db = new DB_ImagenesEntities1())
                     {
                         db.Imagenes.Add(oImagen);
                         db.SaveChanges();
@@ -65,9 +65,9 @@ namespace Facturacion.Controllers
         // Renderizar vista eliminar
         public ActionResult Delete(int? id)
         {
-            using (DB_ImagenesEntities db = new DB_ImagenesEntities())
+            using (DB_ImagenesEntities1 db = new DB_ImagenesEntities1())
             {
-                Imagene imagenes = db.Imagenes.Find(id);
+                Imagenes imagenes = db.Imagenes.Find(id);
                 if (imagenes == null)
                 {
                     return HttpNotFound();
@@ -81,9 +81,9 @@ namespace Facturacion.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int? id)
         {
-            using (DB_ImagenesEntities db = new DB_ImagenesEntities())
+            using (DB_ImagenesEntities1 db = new DB_ImagenesEntities1())
             {
-                Imagene imagen = db.Imagenes.Find(id);
+                Imagenes imagen = db.Imagenes.Find(id);
                 db.Imagenes.Remove(imagen);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -94,7 +94,7 @@ namespace Facturacion.Controllers
         // Convertir de binario a imagen.
         public ActionResult convertirImagen(int id)
         {
-            using (DB_ImagenesEntities db = new DB_ImagenesEntities())
+            using (DB_ImagenesEntities1 db = new DB_ImagenesEntities1())
             {
                 var imagen = (from i in db.Imagenes
                               where i.id == id

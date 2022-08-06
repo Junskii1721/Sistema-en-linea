@@ -12,7 +12,7 @@ namespace Facturacion.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Imagene
+    public partial class Imagenes
     {
         public int id { get; set; }
         public byte[] imagen { get; set; }
