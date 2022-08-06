@@ -1,17 +1,142 @@
-﻿@{
+﻿
+@{
     ViewBag.Title = "Contact";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
 
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/Content/css/Contact.css" rel="stylesheet" />
+
+</head>
+<body>
+    <div>
+        <section class="form-contact">
+            <header>
+                <span>
+                    <i class="fa fa-paper-plane" aria-hidden="true">Contactenos:</i>
+                </span>
+            </header>
+
+            <form action="" class="contact" method="POST">
+                <label for="nombres">Nombre *</label>
+                <input type="text" name="nombre" id="nombre">
+
+                <label for="apellido">Apellido *</label>
+                <input type="text" name="apellido" id="apellido">
+
+                <label for="correo">Correo *</label>
+                <input type="text" name="correo" id="correo">
+
+                <label for="nombres">Celular</label>
+                <input type="text" name="celular" id="celular">
+
+                <label for="mensaje">Mensaje *</label>
+                <textarea name="mensaje" id="mensaje"></textarea>
+                <input type="submit" value="Enviar">
+
+
+            </form>
+        </section>
+    </div>
+</body>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        background: #f7faf9;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .form-contact {
+        background: #FFF;
+        width: 400px;
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: 7px 13px 37px rgba(0, 0, 0, .8);
+    }
+
+    header {
+        font-family:Century;
+        width: 100%;
+        background: #063520;
+        overflow: hidden;
+        color: white;
+    }
+
+        header span {
+            font-size: 20px;
+            display: block;
+            text-align: center;
+            padding: 2.5rem;
+        }
+
+    .contact {
+        padding: .8rem;
+        overflow: hidden;
+        color: gray;
+    }
+
+        .contact label, .contact input, .contact textarea {
+            display: block;
+            width: 100%;
+            margin-bottom: 5px;
+        }
+
+        .contact label {
+            font-weight: 700;
+        }
+
+        .contact input:not([type='submit']), .contact textarea {
+            border: none;
+            border-bottom: 2px solid #cc0404;
+            margin-bottom: 10px;
+            font-size: 20px;
+            outline: none;
+            color: gray;
+        }
+
+        .contact textarea {
+            min-height: 100px;
+        }
+
+    input[type='submit'] {
+        padding: 10px;
+        background: #063520;
+        border: none;
+        color: white;
+        font-size: 20px;
+        /* pointer-events: none; */
+        cursor: pointer;
+    }
+</style>
+<!--  Agregamos nuevo boton para retornar al inicio-->
+<div class="boton">
+    <div class="col-md-offset-2 col-md-12">
+        @Html.ActionLink("Ir a inicio", "Index", null, new { @class = "btn btn-lg btn-primary" })
+
+    </div>
+
+
+    <style>
+
+
+        .boton {
+            width: 500px;
+            border-radius: 80px;
+            text-align: center;
+            position: relative;
+            left: 250px;
+            top: 800px;
+        }
+    </style>
+
+</div>
