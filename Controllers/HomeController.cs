@@ -28,6 +28,7 @@ namespace Facturacion.Controllers
             return View(ListarImagenes);
         }
 
+        [AutorizarUsuario(idOperacion: 1)]
         public ActionResult ProductosDisponibles(string NombreProducto, string oUsuario)
         {
             var ListarProductos = modelo.Productos.ToList();
