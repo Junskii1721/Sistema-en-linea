@@ -1,4 +1,5 @@
-﻿
+﻿@model IEnumerable<Facturacion.Models.Productos>
+
 @{
     ViewBag.Title = "Comprar";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -22,20 +23,32 @@
                 </span>
             </header>
 
-            <form action="" class="contact" method="POST">
-                <label for="producto">Producto *</label>
-                <input type="text" name="nombre" id="nombre">
+            <form class="contact" action="/Home/FinalizarCompra" method="POST">
+                @Html.ValidationSummary()
 
-                <label for="precio">Precio *</label>
-                <input type="text" name="apellido" id="apellido">
+                @foreach (var item in Model)
+                {
+                    @*Este input es necesario para guardar el ProductoID*@
+                    @*Pero no se muestra en la interfaz del usuario*@
+                    <input style="display: none;" type="text" name="idProducto" id="idProducto" value="@item.ProductoID" readonly>
 
-                <label for="cantidad">Cantidad *</label>
-                <input type="text" name="correo" id="correo">
+                    <input style="display: none;" type="text" name="idProducto" id="idProducto" value="@item.ProductoID" readonly>
 
-                <label for="distribuidora">Distribuidora</label>
-                <input type="text" name="celular" id="celular">
+                    <label for="nombreProducto">Producto *</label>
+                    <input type="text" name="nombreProducto" id="nombreProducto" value="@item.Nombre_Del_Producto" readonly>
 
-                <input type="submit" value="Enviar">
+                    <label for="precio">Precio *</label>
+                    <input type="text" name="precio" id="precio" value="@item.Precio_Estandar" readonly>
+
+                    <label for="cantidad">Cantidad *</label>
+                    <input type="number" name="cantidad" id="cantidad" value="1" min="1">
+
+                    <label for="distribuidora">Distribuidora</label>
+                    <input type="text" name="distribuidora" id="distribuidora" value="@item.Almacen.Nombre_De_La_Distribuidora" readonly>
+
+                }
+
+                <button class="btn btn-primary" type="submit">Comprar</button>
 
 
             </form>
@@ -53,14 +66,12 @@
     <style>
         .boton {
             width: 500px;
-           
             border-radius: 80px;
             text-align: center;
             position: relative;
             left: 250px;
-            top:800px;
+            top: 800px;
         }
-
     </style>
 
 </div>

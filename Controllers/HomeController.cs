@@ -9,6 +9,7 @@ using System.IO;
 using System.Web.Security;
 using System.Net;
 using Facturacion.Filtro;
+using Facturacion.Models;
 
 namespace Facturacion.Controllers
 
@@ -201,12 +202,63 @@ namespace Facturacion.Controllers
             return View(ListarProductos);
         }
 
-        public ActionResult Comprar()
+        // Renderizar vista comprar producto
+        // Esta debe recibir un id
+        public ActionResult Comprar(int? id)
         {
-            ViewBag.Message = "Your contact page.";
+            try
+            {
+                // con el id que recibimos, buscamos en la tabla productos el producto con el id.
+                // si se encuentra lo convertimos en una lista.
+                var detalleProducto = (from p in modelo.Productos
+                                       where p.ProductoID == id
+                                       select p).ToList();
 
-            return View();
+                // validamos si se encontro el producto.
+
+                if (detalleProducto == null)
+                {
+                    // si no se encontro el producto retornamos que no se encontro
+                    return HttpNotFound();
+                }
+
+                // si se encontro el producto retornamos la vista y le enviamos los datos del producto.
+                return View(detalleProducto);
+            }
+            catch (Exception)
+            {
+                return View();
+            }
         }
+
+        // Metodo de Comprar se ejecuta cuando el usuario hace click en el botón comprar.
+        [HttpPost]
+        public ActionResult FinalizarCompra(int idProducto, int cantidad)
+        {
+            try
+            {
+                // crea un objeto con los datos que encuentre con el idproducto
+                Models.Productos producto = modelo.Productos.Find(idProducto);
+
+                // reasignamos la cantidad del inventario restandole lo que existe.
+                // menos la cantidad vendida al cliente.
+                producto.Cantidad_En_Inventario = producto.Cantidad_En_Inventario - Convert.ToDecimal(cantidad);
+
+                //actualizamos tabla de productos
+                modelo.Entry(producto).State = EntityState.Modified;
+                modelo.SaveChanges();
+
+                // si la transaccion fue exitosa redireccionamos a vista Exito.
+                return RedirectToAction("Exito", "Home");
+            }
+            catch (Exception)
+            {
+                // si la transaccion fallo redireccionamos a vista Error.
+                return RedirectToAction("Error", "Home");
+            }
+
+        }
+
         public ActionResult CerrarSesion()
         {
 
