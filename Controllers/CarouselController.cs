@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Facturacion.Filtro;
 using Facturacion.Models;
 
 namespace Facturacion.Controllers
@@ -13,6 +14,7 @@ namespace Facturacion.Controllers
     {
 
         // GET: Carousel
+        [AutorizarUsuario(idOperacion: 6)]
         public ActionResult Index()
         {
             using (DB_ImagenesEntities1 db = new DB_ImagenesEntities1())
