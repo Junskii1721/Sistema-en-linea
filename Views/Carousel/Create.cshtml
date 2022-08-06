@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "Subir imagen";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Subir nueva imagen</h2>
+
+<form action="/Carousel/CreateImage" enctype="multipart/form-data" method="post">
+    @Html.ValidationSummary()
+
+    <div class="form-group">
+        <label for="upload" class="control-label">Guardar imagen</label>
+        <input type="file" class="form-control" id="upload" name="upload" />
+    </div>
+
+    <button name="guardar" id="guardar" class="btn btn-default">Guardar</button>
+
+</form>

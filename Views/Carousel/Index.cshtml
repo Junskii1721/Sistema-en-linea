@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Facturacion.Models.Imagene>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="Diseño">Control carousel</h2>
+
+<button class="btn btn-default margen-externo">
+    @Html.ActionLink("Agregar imagen", "Create")
+</button>
+
+<table class="table">
+    <tr>
+
+        <th>
+            Imagen
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                <img class="imagen" src="@Url.Action("convertirImagen","Carousel",new { id = item.id, img = 1 })" />
+            </td>
+
+            <td>
+                <button class="btn btn-default">
+                    @Html.ActionLink("Borrar imagen", "Delete", new { id = item.id })
+                </button>
+            </td>   
+        </tr>
+    }
+
+</table>
+
+<!--Esto es css-->
+<style>
+    .Diseño {
+        background-color: goldenrod;
+        text-align: center;
+    }
+
+    .margen-externo {
+        margin: 20px 0;
+    }
+
+    .imagen {
+        width: 200px;
+        height: auto;
+        object-fit: fill;
+    }
+</style>
