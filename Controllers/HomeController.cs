@@ -156,13 +156,27 @@ namespace Facturacion.Controllers
                 dbContacto.contacto.Add(oContacto);
                 dbContacto.SaveChanges();
                 // Redireciona a la vista de enviado con exito.
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Exito", "Home");
             }
             catch (Exception)
             {
                 // Redireccionar a la vista fallo al enviar.
-                return RedirectToAction("Index", "Error");
+                return RedirectToAction("Error", "Home");
             }
+        }
+        public ActionResult Exito()
+        {
+            ViewBag.Message = "Your application description page.";
+
+            return View();
+        }
+
+
+        public ActionResult Error()
+        {
+            ViewBag.Message = "Your application description page.";
+
+            return View();
         }
 
         [AutorizarUsuario(idOperacion: 4)]
