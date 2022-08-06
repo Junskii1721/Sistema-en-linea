@@ -353,6 +353,7 @@
     <Content Include="Views\Carousel\Create.cshtml" />
     <Content Include="Views\Carousel\Delete.cshtml" />
     <Content Include="Views\Carousel\Index.cshtml" />
+    <Content Include="Views\Home\ProductosDisponibles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

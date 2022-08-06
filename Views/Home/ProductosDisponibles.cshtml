@@ -1,0 +1,125 @@
+﻿@model IEnumerable<Facturacion.Models.Productos>
+
+@{
+    ViewBag.Title = "ProductosDisponibles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    var model = new Facturacion.Models.Productos();
+    <p>
+        <div class="form-group">
+
+            @Html.Label("Busqueda por Nombre de Producto:", htmlAttributes: new { @class = "control-label" })
+            @Html.TextBox("NombreProducto", null, new { @class = "form-control" })
+
+        </div>
+
+        <input type="submit" value="Buscar Producto" class="btn btn-primary" />
+        <br />
+        <span class="input-group-addon">
+            <br />
+            <i class="fa fa-glass"></i>
+        </span>
+    </p>
+    <br />
+}
+<br />
+<br />
+
+
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+
+</head>
+<body>
+
+    <h2 class="VistaDetalle">Productos Disponibles</h2>
+    <style>
+        .VistaDetalle {
+            text-align: center;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            color: antiquewhite;
+            background-color: darkgreen;
+            text-align: center;
+            position: relative;
+            border-radius: 100px;
+        }
+    </style>
+</body>
+</html>
+
+
+
+
+
+
+<div class="table-responsive">
+
+    <table class="table table-bordered table-condensed table-striped table-hover sortable">
+        @if (Model.Count() == 0)
+        {
+            <tr>
+                <td colspan="10">No Record's found.</td>
+            </tr>
+
+        }
+        else
+        {
+            <thead>
+                <tr class="Titulo">
+                    <th>Producto</th>
+                    <th>Cantidad Inventario</th>
+                    <th>Precio</th>
+                    <th>Distribuidora</th>
+                    <th>Acciones:</th>
+
+                    <style>
+
+
+                        .Titulo {
+                            width: 500px;
+                            height: 50px;
+                            background-color: darkcyan;
+                            text-align: center;
+                            font-family: Georgia;
+                            color: azure;
+                            font-size: 20px;
+                        }
+                    </style>
+
+                </tr>
+            </thead>
+            <style>
+                .success1 {
+                    background-color: gold
+                }
+            </style>
+            foreach (var item in Model)
+            {
+                <tr class="cuerpo">
+                    <td>@item.Nombre_Del_Producto</td>
+                    <td>@item.Cantidad_En_Inventario</td>
+                    <td>@item.Precio_Estandar</td>
+                    <td>@item.Almacen.Nombre_De_La_Distribuidora</td>
+                    <td>@Html.ActionLink("Comprar", "Comprar", new { id = item.ProductoID }, new { @class = "btn btn-success" })</td>
+                    <style>
+                        .cuerpo {
+                            background-color: cornsilk;
+                            font-family: Calibri;
+                            font-size: 18px;
+                            border-block: solid;
+                            border-block-color: yellowgreen;
+                        }
+                    </style>
+                </tr>
+
+            }
+        }
+    </table>
+

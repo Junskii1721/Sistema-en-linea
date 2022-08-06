@@ -15,12 +15,12 @@ namespace Facturacion.Controllers
 {
     public class HomeController : Controller
     {
-       
+
         Models.DBFacturacionEntities3 modelo = new Models.DBFacturacionEntities3();
         [AutorizarUsuario(idOperacion: 1)]
         public ActionResult Index(string NombreProducto, string oUsuario)
         {
-
+            // aqui va a air los datos de las imagenes
             var ListarProductos = modelo.Productos.ToList();
 
             if (!string.IsNullOrEmpty(NombreProducto))
@@ -30,6 +30,19 @@ namespace Facturacion.Controllers
 
             return View(ListarProductos);
         }
+
+        public ActionResult ProductosDisponibles(string NombreProducto, string oUsuario)
+        {
+            var ListarProductos = modelo.Productos.ToList();
+
+            if (!string.IsNullOrEmpty(NombreProducto))
+            {
+                ListarProductos = modelo.Productos.Where(p => p.Nombre_Del_Producto.Contains(NombreProducto)).ToList();
+            }
+
+            return View(ListarProductos);
+        }
+
         public List<Models.Almacen> GetListarAlmacenes()
         {
 
@@ -39,7 +52,8 @@ namespace Facturacion.Controllers
         }
 
         [HttpGet]
-        public ActionResult NuevoProducto() {
+        public ActionResult NuevoProducto()
+        {
 
             ViewBag.ListarAlmacenes = new SelectList(modelo.Almacen, "AlmacenID", "Nombre_De_La_Distribuidora");
 
@@ -154,7 +168,7 @@ namespace Facturacion.Controllers
         }
         public ActionResult CerrarSesion()
         {
-             
+
             Session["User"] = null;
             FormsAuthentication.SignOut();
             return RedirectToAction("Login", "Acceso");
@@ -169,32 +183,33 @@ namespace Facturacion.Controllers
         }
 
 
-            // GET: Clientes/Details/5
-            public ActionResult Details(int? id)
+        // GET: Clientes/Details/5
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
             {
-                if (id == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                Models.Productos Producto = modelo.Productos.Find(id);
-                if (Producto == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(Producto);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-        
+            Models.Productos Producto = modelo.Productos.Find(id);
+            if (Producto == null)
+            {
+                return HttpNotFound();
+            }
+            return View(Producto);
+        }
+
 
 
     }
 
-    public class Dto {
+    public class Dto
+    {
 
-        public int  ProductoID { get; set; }      
-        public string Nombre_Del_Producto { get; set; }     
-        public int Cantidad_En_Inventario { get; set; }      
-        public double Precio_Estandar { get; set; }        
-        public string Almacen{ get; set; }     
+        public int ProductoID { get; set; }
+        public string Nombre_Del_Producto { get; set; }
+        public int Cantidad_En_Inventario { get; set; }
+        public double Precio_Estandar { get; set; }
+        public string Almacen { get; set; }
 
     }
 
