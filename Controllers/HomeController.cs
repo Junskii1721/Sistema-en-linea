@@ -15,7 +15,7 @@ namespace Facturacion.Controllers
 {
     public class HomeController : Controller
     {
-
+        Models.DB_ContactoEntities dbContacto = new Models.DB_ContactoEntities();
         Models.DBFacturacionEntities3 modelo = new Models.DBFacturacionEntities3();
         Models.DB_ImagenesEntities1 modeloImg = new Models.DB_ImagenesEntities1();
 

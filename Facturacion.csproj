@@ -156,6 +156,24 @@
     <Compile Include="Models\Ciudad.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Contacto.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Contacto.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\contacto.cs">
+      <DependentUpon>Contacto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Contacto.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Contacto.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Contacto1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Contacto.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DetalleFactura.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -260,6 +278,16 @@
     <Content Include="Imagenes\CARAUSEL\17.jpg" />
     <Content Include="Imagenes\CARAUSEL\8.jpg" />
     <Content Include="Imagenes\Logo_Login\1.jpg" />
+    <Content Include="Models\Contacto.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Contacto.edmx</DependentUpon>
+      <LastGenOutput>Contacto.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Contacto.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Contacto.edmx</DependentUpon>
+      <LastGenOutput>Contacto1.cs</LastGenOutput>
+    </Content>
     <Content Include="Models\Imagenes.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Imagenes.edmx</DependentUpon>
@@ -312,6 +340,13 @@
     </EntityDeploy>
     <Content Include="Models\Imagenes.edmx.diagram">
       <DependentUpon>Imagenes.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\Contacto.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Contacto.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Contacto.edmx.diagram">
+      <DependentUpon>Contacto.edmx</DependentUpon>
     </Content>
     <None Include="NuGetReferenceHintPathRewrite.targets" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
