@@ -4,5 +4,41 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Exito</h2>
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+
+    <style>
+
+        .cuadro {
+            background: gold;
+            width: 500px;
+            height: 40px;
+            font-family: Century;
+            text-align: center;
+            position: relative;
+            left: 300px;
+            border-radius: 10px;
+        }
+    </style>
+
+    <div class="cuadro">
+        <div>
+            <h2>Transaccion Correcta</h2>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-12">
+            @Html.ActionLink("Regresar", "ProductosDisponibles", null, new { @class = "btn btn-lg btn-primary" })
+
+        </div>
+    </div>
+</body>
+</html>
 
