@@ -103,11 +103,21 @@
             foreach (var item in Model)
             {
                 <tr class="cuerpo">
-                    <td>@item.Nombre_Del_Producto</td>
-                    <td>@item.Cantidad_En_Inventario</td>
-                    <td>@item.Precio_Estandar</td>
-                    <td>@item.Almacen.Nombre_De_La_Distribuidora</td>
-                    <td>@Html.ActionLink("Comprar", "Comprar", new { id = item.ProductoID }, new { @class = "btn btn-success" })</td>
+
+                    @if (item.Cantidad_En_Inventario <= 0)
+                    {
+
+                    }
+                    else
+                    {
+
+                        <td>@item.Nombre_Del_Producto</td>
+                        <td>@item.Cantidad_En_Inventario</td>
+                        <td>@item.Precio_Estandar</td>
+                        <td>@item.Almacen.Nombre_De_La_Distribuidora</td>
+                        <td>@Html.ActionLink("Comprar", "Comprar", new { id = item.ProductoID }, new { @class = "btn btn-success" })</td>
+                    }
+
                     <style>
                         .cuerpo {
                             background-color: cornsilk;
